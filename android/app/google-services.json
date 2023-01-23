@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "65933711340",
+    "project_id": "long-equinox-375523",
+    "storage_bucket": "long-equinox-375523.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65933711340:android:2b51f10abe89177ada52c9",
+        "android_client_info": {
+          "package_name": "com.example.demo_intern"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65933711340-284ap51qqgevkj2gd2acctkpblcspmlt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.demo_intern",
+            "certificate_hash": "634da35aefc40b86502d448fd536fb858c5d3a1b"
+          }
+        },
+        {
+          "client_id": "65933711340-vnp4d6h1m2irfgb5sv8pte1q5dm505rg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP1gyoU_VIYsxw3h0Oykg0hmTOW5Xoj7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65933711340-1v7d494b6hto9gjrpldfl2tofkndhbot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
