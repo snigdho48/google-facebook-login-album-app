@@ -1,9 +1,6 @@
-import 'package:demo_intern/utils/shared_preferance.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/User_Provider.dart';
+import '../Auth/User_Provider.dart';
 
 class Launcher extends StatelessWidget {
   static const routeName = '/launcher';
@@ -11,7 +8,6 @@ class Launcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       body: Center(
         child: Column(
@@ -38,7 +34,7 @@ class Launcher extends StatelessWidget {
                     width: 150,
                     child: ElevatedButton(
                       onPressed: () async {
-                        await provider.googleLogin().then((value) {
+                        await UserAuth.googleLogin().then((value) {
                           if (value) {
                             print(value);
                             Navigator.pushReplacementNamed(context, '/home');
@@ -61,7 +57,7 @@ class Launcher extends StatelessWidget {
                     width: 150,
                     child: ElevatedButton(
                       onPressed: () async =>
-                          await provider.signInWithFacebook().then((value) {
+                          await UserAuth.signInWithFacebook().then((value) {
                         if (value) {
                           print(value);
                           Navigator.pushReplacementNamed(context, '/home');

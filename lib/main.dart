@@ -1,23 +1,16 @@
-import 'package:demo_intern/providers/User_Provider.dart';
+import 'package:demo_intern/Auth/User_Provider.dart';
 import 'package:demo_intern/screens/Deatils_page.dart';
 import 'package:demo_intern/screens/Home_Page.dart';
 import 'package:demo_intern/screens/Launcher_Page.dart';
-import 'package:demo_intern/utils/shared_preferance.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (_) => UserProvider(),
-      ),
-    ],
-    child: const MyApp(),
-  ));
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -41,9 +34,10 @@ class MyApp extends StatelessWidget {
         primaryIconTheme: const IconThemeData(color: Colors.white),
       ),
       debugShowCheckedModeBanner: false,
-      title: 'Secure Ambit',
-      initialRoute:
-          userStatus() == null ? Launcher.routeName : HomePage.routeName,
+      title: 'demo_intern',
+      initialRoute: UserAuth.currentUser != null
+          ? HomePage.routeName
+          : Launcher.routeName,
       routes: {
         Launcher.routeName: (_) => const Launcher(),
         HomePage.routeName: (_) => const HomePage(),

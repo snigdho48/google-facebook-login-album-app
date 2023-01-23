@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import '../utils/shared_preferance.dart';
 
-class UserProvider extends ChangeNotifier {
-  User? user;
-
-  Future<bool> googleLogin() async {
+class UserAuth {
+  static final _auth = FirebaseAuth.instance;
+  static User? get currentUser => _auth.currentUser;
+  static Future<bool> googleLogin() async {
     try {
       final GoogleSignIn _googleSignIn = GoogleSignIn();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -20,10 +16,7 @@ class UserProvider extends ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      user = userCredential.user!;
-      saveUser(user); // save user in shared preference
+      await _auth.signInWithCredential(credential);
       return true;
     } catch (e) {
       print(e);
@@ -31,7 +24,7 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> signInWithFacebook() async {
+  static Future<bool> signInWithFacebook() async {
     // Trigger the sign-in flow
     try {
       final LoginResult result = await FacebookAuth.instance
@@ -52,31 +45,24 @@ class UserProvider extends ChangeNotifier {
       try {
         final AuthCredential facebookCredential =
             FacebookAuthProvider.credential(token);
-        final userCredential = await FirebaseAuth.instance
-            .signInWithCredential(facebookCredential);
-        user = userCredential.user!;
-        saveUser(user);
+        await _auth.signInWithCredential(facebookCredential);
         return true;
       } catch (e) {
         print(e);
-        removeUser();
         return false;
       }
     } catch (e) {
       print(e);
-      removeUser();
       return false;
     }
   }
 
-  Future<void> logOut() async {
+  static Future<void> logOut() async {
     // Trigger the sign-out flow
     try {
-      removeUser();
       await FacebookAuth.instance.logOut();
       await FirebaseAuth.instance.signOut();
     } catch (e) {
-      removeUser();
       await GoogleSignIn()
           .signOut()
           .then((value) async => GoogleSignIn().disconnect);

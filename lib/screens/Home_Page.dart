@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import '../Auth/User_Provider.dart';
 import '../components/Iteam_card.dart';
-import '../providers/User_Provider.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home';
@@ -9,16 +8,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider provider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(provider.user?.displayName != null
-            ? provider.user!.displayName!
-            : ''),
+        title: Text(UserAuth.currentUser!.displayName ?? ''),
         actions: [
           IconButton(
-              onPressed: () async => await provider.logOut().then((value) =>
+              onPressed: () async => await UserAuth.logOut().then((value) =>
                   Navigator.pushReplacementNamed(context, '/launcher')),
               icon: const Icon(Icons.logout)),
         ],
