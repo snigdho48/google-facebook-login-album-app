@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../utils/shared_preferance.dart';
-import 'package:http/http.dart' as http;
-
-User? user;
 
 class UserProvider extends ChangeNotifier {
+  User? user;
+
   Future<bool> googleLogin() async {
     try {
       final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -24,12 +23,10 @@ class UserProvider extends ChangeNotifier {
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
       user = userCredential.user!;
-      saveUser(); // save user in shared preference
-      notifyListeners();
+      saveUser(user); // save user in shared preference
       return true;
     } catch (e) {
       print(e);
-      notifyListeners();
       return false;
     }
   }
@@ -58,17 +55,16 @@ class UserProvider extends ChangeNotifier {
         final userCredential = await FirebaseAuth.instance
             .signInWithCredential(facebookCredential);
         user = userCredential.user!;
+        saveUser(user);
         return true;
       } catch (e) {
         print(e);
         removeUser();
-        notifyListeners();
         return false;
       }
     } catch (e) {
       print(e);
       removeUser();
-      notifyListeners();
       return false;
     }
   }

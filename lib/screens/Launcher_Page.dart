@@ -5,24 +5,9 @@ import 'package:provider/provider.dart';
 
 import '../providers/User_Provider.dart';
 
-class Launcher extends StatefulWidget {
+class Launcher extends StatelessWidget {
   static const routeName = '/launcher';
   const Launcher({Key? key}) : super(key: key);
-
-  @override
-  State<Launcher> createState() => _LauncherState();
-}
-
-class _LauncherState extends State<Launcher> {
-  @override
-  void initState() {
-    userStatus().then((value) {
-      if (value) {
-        Navigator.pushReplacementNamed(context, '/home');
-      }
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
