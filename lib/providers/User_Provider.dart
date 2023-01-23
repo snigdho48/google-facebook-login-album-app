@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../utils/shared_preferance.dart';
+import 'package:http/http.dart' as http;
 
 User? user;
 
@@ -40,10 +43,18 @@ class UserProvider extends ChangeNotifier {
       final token = result.accessToken!.token;
       print(
           'Facebook token userID : ${result.accessToken!.grantedPermissions}');
+      // print(
+      //     'Facebook token userID : ${result.accessToken!.grantedPermissions}');
+      // final graphResponse = await http.get(Uri.parse(
+      //     'https://graph.facebook.com/'
+      //     'v2.12/me?fields=name,first_name,last_name,email&access_token=${token}'));
+      //
+      // final profile = jsonDecode(graphResponse.body);
+      // print("Profile is equal to $profile");
 
       try {
         final AuthCredential facebookCredential =
-            FacebookAuthProvider.credential(result.accessToken!.token);
+            FacebookAuthProvider.credential(token);
         final userCredential = await FirebaseAuth.instance
             .signInWithCredential(facebookCredential);
         user = userCredential.user!;
